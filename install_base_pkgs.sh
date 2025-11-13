@@ -46,22 +46,22 @@ echo -e "\n\tinstall xfce-4 DE\n"
 pacman -S --noconfirm xfce4 xfce4-goodies
 
 echo -e "\n\tinstall network utilities\n"
-pacman -S --noconfirm iw wpa_supplicant dialog dhcpcd netctl openssh
+pacman -S --noconfirm iw wpa_supplicant dialog dhcpcd netctl openssh iwd
 
 # install grub
 echo -e "\n\tinstall GRUB bootloader\n"
-pacman -S --noconfirm grub dosfstools os-prober fuse2
-grub-install --target=i386-pc /dev/sda
+pacman -S --noconfirm grub efibootmgr dosfstools os-prober fuse2
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 sed -i 's/ quiet//' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\tinstall base user utilities\n"
 # user utils
-pacman -S --noconfirm git git-delta sudo awesome conky picom rxvt-unicode urxvt-perls xsel numlockx wget inetutils bind alacritty
+pacman -S --noconfirm git git-delta sudo awesome conky picom rxvt-unicode urxvt-perls xsel numlockx wget inetutils bind alacritty kitty
 
 echo -e "\n\tinstall base development utils\n"
 # development utils
-pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip docker docker-compose awk vim tmux tldr fzf ncdu neovim go
+pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip docker awk vim tmux tldr fzf ncdu neovim go
 
 echo -e "\n\tinstall some control tools\n"
 # monitor utils
@@ -72,7 +72,7 @@ echo -e "\n\tinstall neovim additional utils\n"
 pacman -S --noconfirm ripgrep fd luarocks nodejs npm lazygit lynx
 
 # image & pdf utils
-pacman -S --noconfirm ksnip poppler ristretto cmatrix imagemagick
+pacman -S --noconfirm ksnip poppler ristretto imagemagick
 
 echo -e "\n\tinstall some fonts\n"
 pacman -S --noconfirm ttf-dejavu ttf-dejavu-nerd ttf-nerd-fonts-symbols noto-fonts gnu-free-fonts ttf-anonymous-pro ttf-jetbrains-mono-nerd
