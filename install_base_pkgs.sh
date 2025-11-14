@@ -46,7 +46,16 @@ echo -e "\n\tinstall xfce-4 DE\n"
 pacman -S --noconfirm xfce4 xfce4-goodies
 
 echo -e "\n\tinstall network utilities\n"
-pacman -S --noconfirm iw wpa_supplicant dialog dhcpcd netctl openssh iwd
+pacman -S --noconfirm iw openssh
+if [[ $2 == "vbox" ]] ; then
+    pacman -S --noconfirm wpa_supplicant dialog dhcpcd netctl
+else
+    pacman -S --noconfirm iwd
+    mkdir /etc/iwd
+    echo -e "[General]\nEnableNetworkConfiguration=true\n" > /etc/iwd/main.conf
+    echo -e "[Network]\nNameResolvingService=systemd\n" >> /etc/iwd/main.conf
+    systemctl enable iwd.service
+fi
 
 # install grub
 echo -e "\n\tinstall GRUB bootloader\n"
@@ -86,7 +95,7 @@ echo -e "\n\tenabling/starting docker service\n"
 systemctl enable docker.service
 systemctl start  docker.service
 
-if [[ $2 -eq "vbox" ]] ; then
+if [[ $2 == "vbox" ]] ; then
     echo -e "\n\tinstall virtualbox utils\n"
     pacman -S --noconfirm virtualbox-guest-utils
 
