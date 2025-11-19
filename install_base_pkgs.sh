@@ -1,11 +1,20 @@
 #!/bin/bash
 
-if [[ $# -ne 2 ]]; then
-    echo -e "\n\tUsage\n\t  $0 [username] [vbox|...]\n\n\tif vbox is passed, some other steps will be performed"
-    exit 2
+input_user="pierluigi"
+vbox="default"
+
+# Override defaults if arguments are provided
+if [[ $# -ge 1 ]]; then
+    input_user="$1"
+fi
+if [[ $# -ge 2 ]]; then
+    vbox="$vbox"
 fi
 
 echo -e "\n\tinit operations\n"
+echo -e "\n\t  input user: $input_user"
+echo -e "\n\t  mode: $vbox"
+sleep 3 # give user time to read input info
 
 set -ex
 
@@ -47,7 +56,7 @@ pacman -S --noconfirm xfce4 xfce4-goodies
 
 echo -e "\n\tinstall network utilities\n"
 pacman -S --noconfirm iw openssh
-if [[ $2 == "vbox" ]] ; then
+if [[ $vbox == "vbox" ]] ; then
     pacman -S --noconfirm wpa_supplicant dialog dhcpcd netctl
 else
     pacman -S --noconfirm iwd
@@ -74,7 +83,7 @@ pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip
 
 echo -e "\n\tinstall some control tools\n"
 # monitor utils
-pacman -S --noconfirm  ctop dive bat btop atop htop iftop procs glances fastfetch
+pacman -S --noconfirm  ctop dive bat btop atop htop iftop iotop procs glances fastfetch
 
 # neovime utils
 echo -e "\n\tinstall neovim additional utils\n"
@@ -95,7 +104,7 @@ echo -e "\n\tenabling/starting docker service\n"
 systemctl enable docker.service
 systemctl start  docker.service
 
-if [[ $2 == "vbox" ]] ; then
+if [[ $vbox == "vbox" ]] ; then
     echo -e "\n\tinstall virtualbox utils\n"
     pacman -S --noconfirm virtualbox-guest-utils
 
@@ -113,8 +122,6 @@ echo -e "\n\tenabling systemd-resolved.service at startup\n"
 systemctl enable systemd-resolved.service
 systemctl start  systemd-resolved.service
 
-input_user=$1
-
 echo -e "\n\tadd new user $input_user\n"
 useradd -m --groups root,wheel,docker $input_user
 
@@ -127,7 +134,7 @@ cp Xstuff/root_bashrc $HOME/.bashrc
 cp Xstuff/10-monitor.conf   /etc/X11/xorg.conf.d/
 cp Xstuff/20-synaptics.conf /etc/X11/xorg.conf.d/
 
-if [[ $2 -eq "vbox" ]] ; then
+if [[ $vbox -eq "vbox" ]] ; then
     echo -e "\n\tadopting the default netctl profile for wired connection..\n"
     cd /etc/netctl/
     cp examples/ethernet-dhcp .
