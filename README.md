@@ -43,7 +43,7 @@ INSTALL SCRIPTS USAGE
   > cd /srv
   > git clone https://github.com/pdicerbo/arch-install.git
   > cd arch-install
-  > ./install_base_pkgs.sh [username] [vbox]
+  > ./install_base_pkgs.sh [username] [vmware|vbox]
   ```
   the `install_base_pkgs.sh` script will install all the needed packages for a basic ArchLinux installation with AwesomeWM; the two parameters are optional and are the `username` to be created (default is *pierluigi*) and the `vbox` value to trigger the installation of VirtualBox guest additions (default is *no*).
 - set the `root` and `username` password

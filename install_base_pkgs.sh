@@ -56,9 +56,9 @@ pacman -S --noconfirm xfce4 xfce4-goodies
 
 echo -e "\n\tinstall network utilities\n"
 pacman -S --noconfirm iw openssh
-if [[ $install_mode == "vbox" ]] ; then
+if [[ $install_mode == "vbox" || $install_mode == "vmware" ]] ; then
     pacman -S --noconfirm wpa_supplicant dialog dhcpcd netctl
-else
+elif [[ $install_mode == "default" ]] ; then
     pacman -S --noconfirm iwd
     mkdir /etc/iwd
     echo -e "[General]\nEnableNetworkConfiguration=true\n" > /etc/iwd/main.conf
@@ -114,11 +114,9 @@ if [[ $install_mode == "vbox" ]] ; then
 
     echo -e "\n\tadding default shared folder into /etc/fstab\n"
     echo "shared  /mnt/shared  vboxsf  uid=1000,gid=1000,rw,dmode=700,fmode=600,noauto,x-systemd.automount" >> /etc/fstab
-fi
-
-if [[ $install_mode == "vmware" ]] ; then
+elif [[ $install_mode == "vmware" ]] ; then
     echo -e "\n\tinstall VMware utils\n"
-    pacman -S --noconfirm open-vm-tools xf86-input-vmmouse mesa
+    pacman -S --noconfirm open-vm-tools xf86-input-vmmouse mesa gtkmm3
 
 
     echo -e "\n\tenabling/starting VMware service\n"
@@ -150,16 +148,14 @@ cp Xstuff/root_bash_profile $HOME/.bash_profile
 cp Xstuff/10-monitor.conf   /etc/X11/xorg.conf.d/
 cp Xstuff/20-synaptics.conf /etc/X11/xorg.conf.d/
 
-if [[ $install_mode -eq "vbox" ]] ; then
+if [[ $install_mode == "vbox" ]] ; then
     echo -e "\n\tadopting the default netctl profile for wired connection..\n"
     cd /etc/netctl/
     cp examples/ethernet-dhcp .
     sed -i 's/Interface=eth0/Interface=enp0s3/' ethernet-dhcp
     netctl enable ethernet-dhcp
     cd -
-fi
-
-if [[ $install_mode -eq "vmware" ]] ; then
+elif [[ $install_mode == "vmware" ]] ; then
     echo -e "\n\tadopting the default netctl profile for wired connection..\n"
     cd /etc/netctl/
     cp examples/ethernet-dhcp .
