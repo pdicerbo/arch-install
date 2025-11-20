@@ -16,12 +16,6 @@ if [[ $# -eq 1 ]] ; then
     exit 0
 fi
 
-echo -e "\n\tinstalling Visual Studio Code...\n"
-vscode_upgrade
-
-echo -e "\n\tinstalling Google Chrome...\n"
-gchrome_upgrade
-
 echo -e "\n\tinstalling some urxvt extensions..."
 cd $HOME
 mkdir -p $HOME/.urxvt/ext/
@@ -34,5 +28,11 @@ LINK_FOLDER_ROOT=$HOME
 echo -e "\n\tcreating link to shared folder into $LINK_FOLDER_ROOT\n"
 mkdir -p $LINK_FOLDER_ROOT
 ln -s /mnt/shared $LINK_FOLDER_ROOT/shared
+
+echo -e "\n\tinstalling Visual Studio Code...\n"
+vscode_upgrade
+
+echo -e "\n\tinstalling Google Chrome...\n"
+gchrome_upgrade
 
 echo -e "\n\tremember to remove the original repo folder!\n"
