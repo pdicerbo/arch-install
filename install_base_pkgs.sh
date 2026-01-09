@@ -79,7 +79,7 @@ pacman -S --noconfirm git git-delta sudo awesome conky picom rxvt-unicode urxvt-
 
 echo -e "\n\tinstall base development utils\n"
 # development utils
-pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip docker awk vim tmux tldr fzf ncdu neovim go
+pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip docker docker-compose awk vim tmux tldr fzf ncdu neovim go
 
 echo -e "\n\tinstall some control tools\n"
 # monitor utils
@@ -93,7 +93,7 @@ pacman -S --noconfirm ripgrep fd luarocks nodejs npm lazygit lynx
 pacman -S --noconfirm ksnip poppler ristretto imagemagick
 
 echo -e "\n\tinstall some fonts\n"
-pacman -S --noconfirm ttf-dejavu ttf-dejavu-nerd ttf-nerd-fonts-symbols noto-fonts gnu-free-fonts ttf-anonymous-pro ttf-jetbrains-mono-nerd
+pacman -S --noconfirm ttf-dejavu ttf-dejavu-nerd ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji gnu-free-fonts ttf-anonymous-pro ttf-jetbrains-mono-nerd
 
 
 echo -e "\n\tinstall audio utils\n"

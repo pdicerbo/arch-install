@@ -73,3 +73,4 @@ AUR packages to be installed after a fresh installation
 - [luajit](https://aur.archlinux.org/packages/luajit-tiktoken-bin)
 - [devpod-bin](https://aur.archlinux.org/packages/devpod-bin)
 - [unimatrix](https://aur.archlinux.org/packages/unimatrix-git)
+- [scooter](https://aur.archlinux.org/packages/scooter)
