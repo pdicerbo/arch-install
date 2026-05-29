@@ -75,11 +75,11 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n\tinstall base user utilities\n"
 # user utils
-pacman -S --noconfirm git git-delta sudo awesome conky picom rxvt-unicode urxvt-perls xsel numlockx wget inetutils bind alacritty kitty
+pacman -S --noconfirm git git-delta sudo awesome conky picom rxvt-unicode urxvt-perls xsel numlockx wget inetutils bind alacritty kitty rofi
 
 echo -e "\n\tinstall base development utils\n"
 # development utils
-pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip docker docker-compose awk vim tmux tldr fzf ncdu neovim go
+pacman -S --noconfirm gcc clang make cmake linux-headers perl python3 python-pip docker docker-compose awk vim tmux tldr fzf ncdu neovim go eza
 
 echo -e "\n\tinstall some control tools\n"
 # monitor utils
@@ -87,10 +87,10 @@ pacman -S --noconfirm  ctop dive bat btop atop htop iftop iotop procs glances fa
 
 # neovime utils
 echo -e "\n\tinstall neovim additional utils\n"
-pacman -S --noconfirm ripgrep fd luarocks nodejs npm lazygit lynx
+pacman -S --noconfirm ripgrep fd luarocks nodejs npm lazygit lynx firefox
 
 # image & pdf utils
-pacman -S --noconfirm ksnip poppler ristretto imagemagick
+pacman -S --noconfirm ksnip poppler ristretto imagemagick xpdf
 
 echo -e "\n\tinstall some fonts\n"
 pacman -S --noconfirm ttf-dejavu ttf-dejavu-nerd ttf-nerd-fonts-symbols noto-fonts noto-fonts-emoji gnu-free-fonts ttf-anonymous-pro ttf-jetbrains-mono-nerd
@@ -98,7 +98,7 @@ pacman -S --noconfirm ttf-dejavu ttf-dejavu-nerd ttf-nerd-fonts-symbols noto-fon
 
 echo -e "\n\tinstall audio utils\n"
 # audio utils
-pacman -S --noconfirm pipewire wireplumber pipewire-pulse pamixer cava
+pacman -S --noconfirm pipewire wireplumber pipewire-pulse pamixer cava spotify-player
 
 echo -e "\n\tenabling/starting docker service\n"
 systemctl enable docker.service
@@ -163,4 +163,12 @@ elif [[ $install_mode == "vmware" ]] ; then
     netctl enable ethernet-dhcp
     cd -
 fi
+
+echo -e "\n\tinstall tree-sitter-cli\n"
+cd /tmp
+wget https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.5/tree-sitter-linux-x64.gz
+gunzip tree-sitter-linux-x64.gz
+chmod +x tree-sitter-linux-x64
+mv tree-sitter-linux-x64 /usr/local/bin/tree-sitter
+
 echo -e "\n\tremember to set the new user [$input_user] and root password!\n\tjust exec the following command:\n\tpasswd [username]\n\n\tthen continue with:\n\tsu $input_user\n\t./user_install.sh\n"
